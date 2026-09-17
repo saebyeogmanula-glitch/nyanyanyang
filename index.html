@@ -1,494 +1,400 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROFILE MAKER</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>POP PROFILE MAKER</title>
 <style>
 *{box-sizing:border-box}
 :root{
-  --blue:#4f7cff;
-  --blue2:#edf3ff;
-  --ink:#171922;
-  --sub:#858996;
-  --line:#e6e8ee;
-  --bg:#f7f7f8;
-  --white:#fff;
+  --blue:#245cff;
+  --pink:#ff75b5;
+  --yellow:#ffe35b;
+  --black:#17181d;
+  --gray:#777a83;
+  --line:#dedfe4;
+  --paper:#fff;
+  --outside:#f3f3f1;
 }
-html,body{margin:0;padding:0}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:"Paperlogy","페이퍼로지",sans-serif;
-  letter-spacing:-.02em;
-}
-button,input,textarea,select{font:inherit}
+html,body{margin:0;min-height:100%;background:var(--outside);color:var(--black)}
+body{font-family:"Paperlogy","페이퍼로지",Arial,sans-serif;letter-spacing:-.035em}
+button,input,textarea{font:inherit}
 button{cursor:pointer}
-button:focus,input:focus,textarea:focus,select:focus{outline:none}
+button:focus,input:focus,textarea:focus{outline:none}
 
+/* ---------- APP ---------- */
 .app{
   min-height:100vh;
   display:grid;
-  grid-template-columns:380px minmax(0,1fr);
+  grid-template-columns:420px minmax(0,1fr);
 }
 
-/* editor */
+/* ---------- EDITOR ---------- */
 .editor{
+  height:100vh;
+  overflow:auto;
   background:#fff;
   border-right:1px solid var(--line);
-  padding:28px 26px 30px;
-  overflow:auto;
-  height:100vh;
-  position:sticky;
-  top:0;
+  padding:27px 27px 34px;
 }
-.brand{
+.editor-head{
   display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:space-between;
   margin-bottom:22px;
 }
-.brand h1{
+.logo{
   margin:0;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:-.06em;
+  font-size:24px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.08em;
 }
-.brand small{
-  color:var(--sub);
-  font-size:10px;
-}
-.tabs{
-  display:flex;
-  gap:6px;
-  padding:4px;
-  background:#f4f5f7;
-  border-radius:13px;
-  margin-bottom:24px;
-}
+.editor-head small{font-size:9px;color:#a0a2a9}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:23px}
 .tab{
-  flex:1;
-  border:0;
-  background:transparent;
-  color:#8b8e97;
-  padding:10px 7px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:700;
-}
-.tab.active{
+  border:1px solid #dddfe4;
   background:#fff;
-  color:var(--ink);
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  border-radius:10px;
+  padding:11px 5px;
+  font-size:11px;
+  font-weight:850;
+  color:#777a82;
 }
-.panel{display:none}
-.panel.active{display:block}
-.block{
-  padding:0 0 20px;
-  margin-bottom:20px;
-  border-bottom:1px solid #f0f1f3;
+.tab.active{background:var(--black);border-color:var(--black);color:#fff}
+.panel{display:none}.panel.active{display:block}
+.group{
+  border-bottom:1px solid #ececef;
+  padding-bottom:21px;
+  margin-bottom:21px;
 }
-.block:last-child{border-bottom:0}
-.block-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.group:last-child{border-bottom:0}
+.group-title{
+  display:flex;align-items:center;justify-content:space-between;
   margin-bottom:11px;
 }
-.block-title strong{font-size:13px}
-.block-title span{font-size:10px;color:#a0a3ac}
-.field{margin-bottom:9px}
-.field:last-child{margin-bottom:0}
+.group-title b{font-size:13px;font-weight:950}
+.group-title i{font-size:9px;font-style:normal;color:#aaadb5}
 .label{
   display:block;
-  margin:0 0 6px 2px;
-  font-size:10px;
-  color:#737782;
-  font-weight:700;
+  margin:0 0 5px 2px;
+  color:#888b94;
+  font-size:9px;
+  font-weight:800;
 }
-input[type=text],textarea,select{
+.field{margin-bottom:9px}
+input[type=text],textarea{
   width:100%;
-  border:1px solid #e1e3e8;
-  background:#fbfbfc;
-  border-radius:10px;
+  border:1px solid #dedfe4;
+  border-radius:9px;
+  background:#fafafa;
   padding:10px 11px;
-  color:var(--ink);
-  font-size:12px;
-  transition:.15s;
+  font-size:11px;
+  color:var(--black);
 }
-input[type=text]:focus,textarea:focus,select:focus{
+textarea{min-height:105px;line-height:1.75;resize:vertical}
+input[type=text]:focus,textarea:focus{
   border-color:var(--blue);
   background:#fff;
-  box-shadow:0 0 0 3px rgba(79,124,255,.08);
+  box-shadow:0 0 0 3px rgba(36,92,255,.07)
 }
-textarea{resize:vertical;min-height:90px;line-height:1.65}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .upload{
-  border:1px dashed #d8dbe2;
-  border-radius:12px;
-  background:#fafbfc;
-  padding:11px;
+  padding:8px;
+  border:1px dashed #d7d9df;
+  border-radius:9px;
+  background:#fafafa;
 }
 .upload input{display:none}
 .upload label{
+  min-height:52px;
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:70px;
-  border-radius:9px;
+  border:1px solid #e5e6ea;
+  border-radius:7px;
   background:#fff;
-  color:#777b85;
-  font-size:11px;
-  font-weight:700;
-  border:1px solid #e8e9ed;
-  cursor:pointer;
+  font-size:10px;
+  font-weight:800;
+  color:#777a82;
 }
-.file-name{
-  color:#a0a3ab;
-  font-size:9px;
-  margin-top:7px;
+.filename{
+  margin-top:5px;
   text-align:center;
+  font-size:8px;
+  color:#a4a7af;
+  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  white-space:nowrap;
 }
+.ratios{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .ratio{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:6px;
-}
-.ratio button{
-  border:1px solid #e0e3e9;
-  background:#fff;
-  border-radius:9px;
-  padding:9px 3px;
-  font-size:10px;
-  color:#777b85;
-}
-.ratio button.active{
-  color:var(--blue);
-  border-color:#b9caff;
-  background:#f3f6ff;
-  font-weight:800;
-}
-.range{
-  display:grid;
-  grid-template-columns:1fr 44px;
-  gap:8px;
-  align-items:center;
-}
-input[type=range]{width:100%;accent-color:var(--blue)}
-.range-value{
-  background:#f5f6f8;
+  border:1px solid #dedfe4;
   border-radius:8px;
-  padding:6px 3px;
-  text-align:center;
-  font-size:10px;
-  color:#747883;
-}
-.color-line{display:flex;gap:7px;align-items:center}
-input[type=color]{
-  width:42px;height:36px;
-  padding:2px;border:1px solid #e0e2e7;
-  border-radius:9px;background:#fff;
-}
-.color-line input[type=text]{flex:1}
-.checks{display:flex;gap:6px;flex-wrap:wrap}
-.check{
-  border:1px solid #e1e3e8;
+  padding:10px 3px;
   background:#fff;
-  color:#777b85;
-  border-radius:999px;
-  padding:7px 10px;
+  color:#777a82;
   font-size:10px;
 }
-.check.on{
-  color:var(--blue);
-  background:#f2f5ff;
-  border-color:#bdd0ff;
-}
+.ratio.active{border-color:var(--blue);background:#eff3ff;color:var(--blue);font-weight:900}
+.slider{display:grid;grid-template-columns:1fr 48px;gap:8px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.slider-val{background:#f0f1f3;border-radius:7px;padding:7px 2px;text-align:center;font-size:9px;color:#6f727b}
+.color-row{display:grid;grid-template-columns:42px 1fr;gap:7px}
+input[type=color]{width:42px;height:40px;padding:2px;border:1px solid #dedfe4;border-radius:8px;background:#fff}
 .save{
-  width:100%;
-  border:0;
-  border-radius:11px;
-  padding:13px;
-  background:var(--ink);
-  color:#fff;
-  font-size:12px;
-  font-weight:800;
+  width:100%;padding:13px;
+  border:0;border-radius:9px;
+  background:var(--black);color:#fff;
+  font-size:11px;font-weight:900;
 }
 
-/* preview area */
+/* ---------- PREVIEW ---------- */
 .preview{
   min-width:0;
   min-height:100vh;
-  padding:32px;
+  padding:25px 29px 29px;
   display:flex;
   flex-direction:column;
 }
-.preview-top{
+.preview-head{
+  flex:none;
+  height:29px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.preview-head b{font-size:13px;font-weight:950}
+.preview-head span{font-size:9px;color:#9b9ea6}
+.stage{
+  min-width:0;
+  min-height:0;
+  flex:1;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-}
-.preview-top h2{
-  margin:0;
-  font-size:13px;
-  font-weight:800;
-}
-.preview-top span{
-  color:#999da6;
-  font-size:10px;
-}
-.canvas{
-  flex:1;
-  min-height:calc(100vh - 100px);
-  border:1px solid #e4e5e9;
-  border-radius:20px;
+  justify-content:center;
+  padding:20px;
+  overflow:hidden;
+  border:1px solid #dedfe4;
+  border-radius:17px;
   background:
     linear-gradient(#fff 1px,transparent 1px),
-    linear-gradient(90deg,#fff 1px,transparent 1px);
+    linear-gradient(90deg,#fff 1px,transparent 1px),
+    #efeff1;
   background-size:24px 24px;
-  background-color:#f0f1f3;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px;
-  overflow:auto;
 }
-
-/* actual profile */
-.profile{
-  width:min(900px,100%);
+.preview-frame{
+  position:relative;
+  width:100%;
+  max-width:1180px;
   aspect-ratio:6/4;
-  background:#fff;
-  border:1px solid #e3e4e8;
-  border-radius:3px;
-  box-shadow:0 24px 60px rgba(24,29,43,.13);
-  overflow:hidden;
-  position:relative;
 }
-.cover{
-  height:35%;
-  position:relative;
-  background:var(--blue2);
-  overflow:hidden;
-}
-.cover img{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:none;
-}
-.cover.has-image img{display:block}
-.cover-placeholder{
+.result{
   position:absolute;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#b0b8cb;
-  font-size:10px;
-  letter-spacing:.08em;
+  background:#fff;
+  border:1px solid #18191e;
+  overflow:hidden;
+  box-shadow:15px 15px 0 #d6d7da;
 }
-.cover.has-image .cover-placeholder{display:none}
-.cover-deco{
+
+/* ---------- RESULT DESIGN ---------- */
+.topline{
   position:absolute;
-  right:7%;
-  top:16%;
-  font-size:clamp(30px,4vw,56px);
-  color:rgba(255,255,255,.85);
-  transform:rotate(8deg);
-  pointer-events:none;
+  left:4.5%;right:4.5%;top:5.2%;
+  height:7.8%;
+  border-bottom:1px solid #18191e;
+  display:flex;align-items:flex-start;gap:8px;
 }
-.profile-main{
-  height:65%;
-  padding:0 6%;
+.chip{
+  padding:6px 11px;
+  border:1px solid #18191e;
+  border-radius:999px;
+  background:#fff;
+  font-size:clamp(7px,.75vw,11px);
+  line-height:1;
+  font-weight:900;
+}
+.chip.hot{background:var(--yellow);transform:rotate(-2deg)}
+.topright{margin-left:auto;font-size:clamp(6px,.55vw,8px);color:#94979f;padding-top:5px}
+
+.hero-title{
+  position:absolute;
+  left:4.5%;top:16.5%;
+  z-index:2;
+  font-size:clamp(33px,5.2vw,73px);
+  line-height:.78;
+  font-weight:950;
+  letter-spacing:-.115em;
+}
+.hero-title span{
+  color:var(--blue);
+  margin-left:23%;
+}
+.circle{
+  position:absolute;border:1px solid #18191e;border-radius:50%;
+}
+.circle.c1{right:7%;top:15%;width:12%;aspect-ratio:1;background:var(--pink);transform:rotate(8deg)}
+.circle.c2{right:23%;top:30%;width:5%;aspect-ratio:1;background:var(--yellow)}
+.mark{
+  position:absolute;right:8%;top:34%;
+  color:var(--blue);font-size:clamp(18px,2vw,30px);font-weight:950
+}
+
+.main{
+  position:absolute;
+  left:4.5%;right:4.5%;top:39%;bottom:5%;
+  display:grid;
+  grid-template-columns:46% 54%;
+}
+
+/* personality left */
+.left{
+  border-right:1px solid #18191e;
+  padding:0 7% 0 0;
   position:relative;
+}
+.heading{
+  display:flex;align-items:center;gap:7px;
+  margin-bottom:11px;
+}
+.number{
+  width:22px;height:22px;
+  border:1px solid #18191e;border-radius:50%;
+  background:var(--yellow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:950;
+}
+.heading b{font-size:clamp(12px,1.25vw,17px);font-weight:950}
+.copy{
+  border-top:4px solid #18191e;
+  min-height:68%;
+  padding:14px 15px 12px 18px;
+  position:relative;
+}
+.copy:before{
+  content:"";
+  position:absolute;left:0;top:12px;bottom:12px;width:4px;background:var(--blue)
+}
+.copy-title{font-size:10px;font-weight:950;margin-bottom:8px}
+.copy-text{font-size:clamp(7px,.72vw,10px);line-height:1.82;color:#555861;white-space:pre-line}
+.notice{
+  margin-top:11px;
+  border:1px solid #18191e;
+  background:#f6f6f4;
+  padding:8px 10px;
+  font-size:clamp(6px,.62vw,8px);
+  line-height:1.55
+}
+.page-no{
+  position:absolute;right:7%;bottom:1%;
+  display:flex;align-items:center;gap:5px;
+  font-size:7px
+}
+.page-no button{
+  width:20px;height:20px;border:1px solid #18191e;border-radius:50%;
+  background:#fff;font-size:9px
+}
+
+/* profile right */
+.right{padding:0 0 0 7%}
+.profile-row{
+  display:grid;
+  grid-template-columns:30% 1fr;
+  gap:16px;
 }
 .avatar{
-  width:clamp(72px,9vw,116px);
-  aspect-ratio:1;
-  border-radius:50%;
-  border:5px solid #fff;
-  background:#e9ecf2;
-  position:absolute;
-  left:6%;
-  top:-18%;
-  overflow:hidden;
-  box-shadow:0 4px 16px rgba(0,0,0,.09);
-}
-.avatar img{width:100%;height:100%;object-fit:cover;display:none}
-.avatar.has-image img{display:block}
-.avatar-placeholder{
-  height:100%;display:flex;align-items:center;justify-content:center;
-  color:#a5a9b2;font-size:9px;
-}
-.avatar.has-image .avatar-placeholder{display:none}
-
-.profile-head{
-  padding-top:4.5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-}
-.profile-name{
-  font-size:clamp(24px,3.5vw,42px);
-  font-weight:800;
-  line-height:1;
-  letter-spacing:-.07em;
-}
-.profile-id{
-  margin-top:7px;
-  font-size:10px;
-  color:#90939b;
-}
-.follow{
-  border:1px solid var(--blue);
-  color:#fff;
-  background:var(--blue);
-  border-radius:999px;
-  padding:7px 15px;
-  font-size:9px;
-  font-weight:800;
-}
-.intro{
-  margin-top:14px;
-  max-width:70%;
-  font-size:10px;
-  line-height:1.7;
-  white-space:pre-line;
-}
-.tags{
-  display:flex;flex-wrap:wrap;gap:5px;
-  margin-top:9px;
-}
-.tag{
-  padding:4px 7px;
-  border-radius:999px;
-  color:var(--blue);
-  background:#eef3ff;
-  font-size:8px;
-  font-weight:800;
-}
-.info-line{
-  display:flex;
-  flex-wrap:wrap;
-  gap:11px;
-  margin-top:11px;
-  padding-bottom:12px;
-  border-bottom:1px solid #eceef1;
-  color:#70747e;
-  font-size:8px;
-}
-.content{
-  display:grid;
-  grid-template-columns:1.45fr .75fr;
-  gap:24px;
-  padding-top:13px;
-}
-.pair-area h3,.side h3{
-  margin:0 0 8px;
-  font-size:13px;
-  letter-spacing:-.04em;
-}
-.pair-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-.pair-photo{
-  aspect-ratio:1;
-  background:#eef0f4;
-  overflow:hidden;
-  border-radius:2px;
   position:relative;
+  width:100%;aspect-ratio:1;
+  border:1px solid #18191e;
+  background:#eff0f2;
+  overflow:hidden;
 }
-.pair-photo img{width:100%;height:100%;object-fit:cover;display:none}
-.pair-photo.has-image img{display:block}
-.pair-photo .ph{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  color:#a3a7b0;font-size:8px;
+.avatar img{display:none;width:100%;height:100%;object-fit:cover}
+.avatar.has-image img{display:block}
+.avatar.has-image .placeholder{display:none}
+.placeholder{
+  height:100%;display:flex;align-items:center;justify-content:center;
+  color:#999ca4;font-size:7px
 }
-.pair-photo.has-image .ph{display:none}
+.profile-label{
+  position:absolute;left:-5px;bottom:-5px;
+  background:var(--blue);color:#fff;
+  padding:4px 7px;font-size:7px;font-weight:900;
+  transform:rotate(-4deg)
+}
+.name{font-size:clamp(23px,3.1vw,43px);font-weight:950;line-height:.86;letter-spacing:-.105em}
+.handle{font-size:8px;color:#92959e;margin-top:6px}
+.bio{font-size:clamp(7px,.7vw,10px);line-height:1.65;margin-top:13px;max-width:260px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{
+  padding:4px 6px;border:1px solid #18191e;border-radius:999px;
+  font-size:6px;font-weight:900
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:7px;
+  border-top:1px solid #dfe0e4;
+  margin-top:9px;padding-top:8px;
+  color:#898c94;font-size:6px
+}
+.meta b{color:#28292e;margin-left:2px}
+
+/* pair images */
+.pair{margin-top:11px}
+.pair-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:6px
+}
+.pair-head b{font-size:clamp(10px,1vw,14px);font-weight:950}
+.pair-head span{font-size:7px;color:#90939b}
+.pair-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;width:80%
+}
+.pair-img{
+  aspect-ratio:1/1;
+  position:relative;overflow:hidden;
+  border:1px solid #18191e;background:#eceef0
+}
+.pair-img img{display:none;width:100%;height:100%;object-fit:cover}
+.pair-img.has-image img{display:block}
+.pair-img.has-image .pair-placeholder{display:none}
+.pair-placeholder{height:100%;display:flex;align-items:center;justify-content:center;color:#999ca4;font-size:7px}
 .story{
-  margin-top:9px;
-  border-left:2px solid var(--blue);
-  padding-left:9px;
-  font-size:8px;
-  line-height:1.7;
-  color:#666a73;
-  white-space:pre-line;
-}
-.side{
-  border-left:1px solid #eceef1;
-  padding-left:18px;
-}
-.side dl{
-  margin:0;
-  display:grid;
-  grid-template-columns:45px 1fr;
-  row-gap:5px;
-  font-size:8px;
-}
-.side dt{color:#a0a3ab}
-.side dd{margin:0;color:#4e525c}
-.note{
-  margin-top:10px;
-  padding:8px 9px;
-  background:#f5f7ff;
-  color:#646b7b;
-  font-size:8px;
+  width:80%;
+  margin-top:6px;
+  border-left:3px solid var(--pink);
+  padding-left:7px;
+  font-size:clamp(6px,.62vw,8px);
   line-height:1.55;
+  color:#686b73;
+  white-space:pre-line
 }
-.more{
-  margin-top:10px;
-  display:flex;flex-direction:column;gap:4px;
+.links{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.link{
+  padding:4px 7px;background:#18191e;color:#fff;
+  font-size:6px;font-weight:800
 }
-.more a{
-  text-decoration:none;color:#666a73;
-  border-bottom:1px solid #eceef1;
-  padding:4px 0;font-size:8px;
+.ornament{
+  position:absolute;font-size:clamp(15px,1.8vw,25px);font-weight:900;color:var(--blue)
 }
-.credit{
-  position:absolute;
-  right:5.5%;
-  bottom:4%;
-  font-size:7px;
-  color:#b0b3ba;
+.o1{left:3%;bottom:7%}.o2{right:4%;bottom:7%;color:var(--pink)}
+.note{
+  position:absolute;right:29%;bottom:6%;
+  color:#90939b;font-size:6px;transform:rotate(-6deg)
 }
 
-@media(max-width:900px){
-  .app{grid-template-columns:1fr}
-  .editor{
-    height:auto;
-    position:relative;
-    border-right:0;
-    border-bottom:1px solid var(--line);
-  }
-  .preview{min-height:auto}
-  .canvas{min-height:650px}
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:980px){
+  .app{grid-template-columns:350px minmax(0,1fr)}
+  .editor{padding:23px 20px}
+  .preview{padding:20px}
+  .stage{padding:14px}
 }
-@media(max-width:620px){
-  .editor{padding:20px 16px}
-  .preview{padding:15px}
-  .canvas{padding:12px;min-height:500px;border-radius:14px}
-  .profile{
-    width:100%;
-    aspect-ratio:auto;
-    min-height:600px;
-  }
-  .cover{height:185px}
-  .profile-main{height:auto;min-height:415px;padding:0 20px 30px}
-  .avatar{left:20px;top:-45px;width:90px}
-  .profile-head{padding-top:62px}
-  .intro{max-width:100%}
-  .content{grid-template-columns:1fr;gap:14px}
-  .side{border-left:0;border-top:1px solid #eceef1;padding:14px 0 0}
-  .pair-grid{max-width:360px}
+@media(max-width:760px){
+  .app{display:block}
+  .editor{height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .preview{min-height:650px;padding:14px}
+  .stage{min-height:570px;padding:10px}
 }
 </style>
 </head>
@@ -496,354 +402,308 @@ input[type=color]{
 <div class="app">
 
 <aside class="editor">
-  <div class="brand">
-    <h1>PROFILE MAKER</h1>
-    <small>PROFILE / PERSONALITY</small>
+  <div class="editor-head">
+    <h1 class="logo">PROFILE MAKER</h1>
+    <small>POP PROFILE / 06:04</small>
   </div>
 
-  <nav class="tabs">
+  <div class="tabs">
     <button class="tab active" data-tab="profile">프로필</button>
     <button class="tab" data-tab="image">이미지</button>
     <button class="tab" data-tab="theme">테마</button>
-  </nav>
+  </div>
 
-  <section class="panel active" id="panel-profile">
-    <div class="block">
-      <div class="block-title"><strong>기본 정보</strong><span>01</span></div>
-      <div class="field">
-        <label class="label">이름</label>
-        <input id="name" type="text" value="지새벽">
-      </div>
-      <div class="field">
-        <label class="label">아이디</label>
-        <input id="handle" type="text" value="@dawn_">
-      </div>
-      <div class="field">
-        <label class="label">한줄 소개</label>
-        <textarea id="bio">너와 함께라서, 더 좋은 날들.</textarea>
-      </div>
-      <div class="field">
-        <label class="label">태그</label>
-        <input id="tags" type="text" value="#연인, #일상, #게임, #카페, #힐링">
-      </div>
+  <div class="panel active" id="profile">
+    <div class="group">
+      <div class="group-title"><b>기본 정보</b><i>01</i></div>
+      <div class="field"><label class="label">이름</label><input id="name" type="text" value="지새벽"></div>
+      <div class="field"><label class="label">아이디</label><input id="handle" type="text" value="@dawn_"></div>
+      <div class="field"><label class="label">한줄 소개</label><textarea id="bio">너와 함께라서, 더 좋은 날들.</textarea></div>
+      <div class="field"><label class="label">태그 · 쉼표로 구분</label><input id="tags" type="text" value="#연인, #일상, #게임, #카페, #힐링"></div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>프로필 정보</strong><span>02</span></div>
-      <div class="three">
+    <div class="group">
+      <div class="group-title"><b>프로필 정보</b><i>02</i></div>
+      <div class="grid3">
         <input id="age" type="text" value="20대" placeholder="나이">
         <input id="job" type="text" value="대학생" placeholder="직업">
         <input id="gender" type="text" value="여성" placeholder="성별">
       </div>
-      <div style="height:8px"></div>
+      <div style="height:6px"></div>
       <input id="mbti" type="text" value="INFJ" placeholder="MBTI">
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>페어 / 스토리</strong><span>03</span></div>
-      <div class="field">
-        <label class="label">페어 제목</label>
-        <input id="pairTitle" type="text" value="Pair ♡">
-      </div>
-      <div class="field">
-        <label class="label">우리의 이야기</label>
-        <textarea id="story">처음엔 그냥 스쳐가는 사이였는데,
+    <div class="group">
+      <div class="group-title"><b>성향글</b><i>03</i></div>
+      <textarea id="personality">처음엔 조금 낯을 가리는 편이에요.
+낯선 사람에게는 말도 잘 안하고, 조금 까칠해 보일 수도 있어요.
+
+하지만 가까워지면 생각보다 엄청 다정하고,
+좋아하는 사람한테는 더 많이 표현하는 편이에요.
+
+좋아하는 건 너, 게임, 카페, 맛있는 거.
+그리고... 함께하는 모든 순간.</textarea>
+    </div>
+
+    <div class="group">
+      <div class="group-title"><b>페어 / 스토리</b><i>04</i></div>
+      <div class="field"><input id="pairTitle" type="text" value="PAIR ♡"></div>
+      <div class="field"><textarea id="story">처음엔 그냥 스쳐가는 사이였는데,
 지금은 서로 없으면 안 될 사이가 되었다.
 같이 웃고, 같이 울고,
-앞으로도 쭉 함께할 거야.</textarea>
-      </div>
-      <div class="two">
-        <input id="dday" type="text" value="D+328" placeholder="D-day">
-        <input id="warning" type="text" value="서로를 존중해 주세요." placeholder="주의 문구">
+앞으로도 쭉 함께할 거야.</textarea></div>
+      <div class="grid2">
+        <input id="dday" type="text" value="D+328">
+        <input id="warning" type="text" value="서로를 존중해 주세요.">
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="panel" id="panel-image">
-    <div class="block">
-      <div class="block-title"><strong>프로필 이미지</strong><span>01</span></div>
+  <div class="panel" id="image">
+    <div class="group">
+      <div class="group-title"><b>프로필 이미지</b><i>01</i></div>
       <div class="upload">
         <input id="avatarFile" type="file" accept="image/*">
         <label for="avatarFile">＋ 프로필 이미지 선택</label>
-        <div id="avatarFileName" class="file-name">이미지 없음</div>
+        <div class="filename" id="avatarFileName">이미지 없음</div>
       </div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>커버 이미지</strong><span>02</span></div>
-      <div class="upload">
-        <input id="coverFile" type="file" accept="image/*">
-        <label for="coverFile">＋ 커버 이미지 선택</label>
-        <div id="coverFileName" class="file-name">이미지 없음</div>
-      </div>
-    </div>
-
-    <div class="block">
-      <div class="block-title"><strong>페어 이미지</strong><span>03</span></div>
+    <div class="group">
+      <div class="group-title"><b>페어 이미지 01</b><i>02</i></div>
       <div class="upload">
         <input id="pair1File" type="file" accept="image/*">
-        <label for="pair1File">＋ 첫 번째 페어 이미지</label>
-        <div id="pair1FileName" class="file-name">이미지 없음</div>
+        <label for="pair1File">＋ 이미지 선택</label>
+        <div class="filename" id="pair1Name">이미지 없음</div>
       </div>
-      <div style="height:7px"></div>
+    </div>
+
+    <div class="group">
+      <div class="group-title"><b>페어 이미지 02</b><i>03</i></div>
       <div class="upload">
         <input id="pair2File" type="file" accept="image/*">
-        <label for="pair2File">＋ 두 번째 페어 이미지</label>
-        <div id="pair2FileName" class="file-name">이미지 없음</div>
+        <label for="pair2File">＋ 이미지 선택</label>
+        <div class="filename" id="pair2Name">이미지 없음</div>
       </div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>이미지 비율</strong><span>04</span></div>
-      <div class="ratio">
-        <button data-ratio="square" class="active">1 : 1</button>
-        <button data-ratio="portrait">4 : 6</button>
-        <button data-ratio="landscape">6 : 4</button>
+    <div class="group">
+      <div class="group-title"><b>페어 이미지 비율</b><i>04</i></div>
+      <div class="ratios">
+        <button class="ratio active" data-ratio="1/1">1 : 1</button>
+        <button class="ratio" data-ratio="4/6">4 : 6</button>
+        <button class="ratio" data-ratio="6/4">6 : 4</button>
       </div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>이미지 크기</strong><span>05</span></div>
-      <div class="range">
-        <input id="imageSize" type="range" min="60" max="100" value="90">
-        <div id="imageSizeValue" class="range-value">90%</div>
+    <div class="group">
+      <div class="group-title"><b>페어 이미지 크기</b><i>05</i></div>
+      <div class="slider">
+        <input id="pairSize" type="range" min="45" max="100" value="80">
+        <div class="slider-val" id="pairSizeVal">80%</div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="panel" id="panel-theme">
-    <div class="block">
-      <div class="block-title"><strong>컬러 테마</strong><span>01</span></div>
-      <div class="color-line">
-        <input id="accent" type="color" value="#4f7cff">
-        <input id="accentText" type="text" value="#4f7cff">
-      </div>
-    </div>
-
-    <div class="block">
-      <div class="block-title"><strong>표시할 영역</strong><span>02</span></div>
-      <div class="checks">
-        <button class="check on" data-show="story">STORY</button>
-        <button class="check on" data-show="gallery">GALLERY</button>
-        <button class="check on" data-show="more">MORE</button>
+  <div class="panel" id="theme">
+    <div class="group">
+      <div class="group-title"><b>메인 컬러</b><i>01</i></div>
+      <div class="color-row">
+        <input id="color" type="color" value="#245cff">
+        <input id="colorText" type="text" value="#245cff">
       </div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>외부 링크</strong><span>03</span></div>
-      <div class="field"><input id="link1" type="text" value="X (Twitter)" placeholder="링크 이름"></div>
-      <div class="field"><input id="link2" type="text" value="블로그" placeholder="링크 이름"></div>
-      <div class="field"><input id="link3" type="text" value="Instagram" placeholder="링크 이름"></div>
+    <div class="group">
+      <div class="group-title"><b>링크</b><i>02</i></div>
+      <div class="field"><input id="link1" type="text" value="X / Twitter"></div>
+      <div class="field"><input id="link2" type="text" value="BLOG"></div>
+      <div class="field"><input id="link3" type="text" value="INSTAGRAM"></div>
     </div>
 
-    <div class="block">
-      <div class="block-title"><strong>HTML</strong><span>04</span></div>
-      <button class="save" onclick="downloadHTML()">현재 디자인 HTML 저장</button>
-    </div>
-  </section>
+    <button class="save" id="save">결과 HTML 저장</button>
+  </div>
 </aside>
 
 <main class="preview">
-  <div class="preview-top">
-    <h2>미리보기</h2>
+  <div class="preview-head">
+    <b>미리보기</b>
     <span>LIVE PREVIEW · 6 : 4</span>
   </div>
 
-  <div class="canvas">
-    <article class="profile" id="profile">
-      <div class="cover" id="cover">
-        <div class="cover-placeholder">COVER IMAGE</div>
-        <img id="coverImg" alt="">
-        <div class="cover-deco">✦</div>
-      </div>
+  <div class="stage">
+    <div class="preview-frame">
+      <article class="result" id="result">
 
-      <div class="profile-main">
-        <div class="avatar" id="avatar">
-          <div class="avatar-placeholder">PROFILE</div>
-          <img id="avatarImg" alt="">
+        <div class="topline">
+          <span class="chip hot">PROFILE</span>
+          <span class="chip">PERSONALITY</span>
+          <span class="chip">PAIR</span>
+          <span class="topright">PERSONAL PAGE / 2026</span>
         </div>
 
-        <div class="profile-head">
-          <div>
-            <div class="profile-name" id="pName">지새벽</div>
-            <div class="profile-id" id="pHandle">@dawn_</div>
-          </div>
-          <button class="follow">FOLLOW</button>
-        </div>
+        <div class="hero-title">my<br><span>profile.</span></div>
+        <div class="circle c1"></div>
+        <div class="circle c2"></div>
+        <div class="mark">×</div>
 
-        <div class="intro" id="pBio">너와 함께라서, 더 좋은 날들.</div>
-        <div class="tags" id="pTags"></div>
+        <div class="main">
 
-        <div class="info-line">
-          <span>나이 <b id="pAge">20대</b></span>
-          <span>직업 <b id="pJob">대학생</b></span>
-          <span>성별 <b id="pGender">여성</b></span>
-          <span>MBTI <b id="pMbti">INFJ</b></span>
-        </div>
-
-        <div class="content">
-          <section class="pair-area">
-            <h3 id="pPairTitle">Pair ♡</h3>
-            <div class="pair-grid" id="pairGrid">
-              <div class="pair-photo" id="pairPhoto1"><span class="ph">IMAGE 01</span><img id="pairImg1" alt=""></div>
-              <div class="pair-photo" id="pairPhoto2"><span class="ph">IMAGE 02</span><img id="pairImg2" alt=""></div>
+          <!-- LEFT : PERSONALITY -->
+          <section class="left">
+            <div class="heading">
+              <span class="number">01</span>
+              <b>PERSONALITY</b>
             </div>
-            <div class="story" id="storyBox">
-              <span id="pStory">처음엔 그냥 스쳐가는 사이였는데,
-지금은 서로 없으면 안 될 사이가 되었다.
-같이 웃고, 같이 울고,
-앞으로도 쭉 함께할 거야.</span>
+            <div class="copy">
+              <div class="copy-title">ABOUT ME</div>
+              <div class="copy-text" id="outPersonality"></div>
+              <div class="notice" id="outWarning"></div>
             </div>
+            <div class="page-no"><button>‹</button><span>01 / 03</span><button>›</button></div>
+            <div class="ornament o1">✦</div>
           </section>
 
-          <aside class="side">
-            <h3>Profile</h3>
-            <dl>
-              <dt>나이</dt><dd id="sAge">20대</dd>
-              <dt>직업</dt><dd id="sJob">대학생</dd>
-              <dt>성별</dt><dd id="sGender">여성</dd>
-              <dt>MBTI</dt><dd id="sMbti">INFJ</dd>
-            </dl>
-            <div class="note" id="noteBox">
-              ✦ <span id="pWarning">서로를 존중해 주세요.</span>
+          <!-- RIGHT : PROFILE + PAIR -->
+          <section class="right">
+            <div class="profile-row">
+              <div>
+                <div class="avatar" id="avatar">
+                  <div class="placeholder">PROFILE IMAGE</div>
+                  <img id="avatarImg" alt="">
+                </div>
+                <div class="profile-label">PROFILE</div>
+              </div>
+
+              <div>
+                <div class="name" id="outName">지새벽</div>
+                <div class="handle" id="outHandle">@dawn_</div>
+                <div class="bio" id="outBio"></div>
+                <div class="tags" id="outTags"></div>
+                <div class="meta">
+                  <span>AGE <b id="outAge"></b></span>
+                  <span>JOB <b id="outJob"></b></span>
+                  <span>GENDER <b id="outGender"></b></span>
+                  <span>MBTI <b id="outMbti"></b></span>
+                </div>
+              </div>
             </div>
-            <div class="more" id="moreBox">
-              <h3>More</h3>
-              <a href="#">↗ <span id="pLink1">X (Twitter)</span></a>
-              <a href="#">↗ <span id="pLink2">블로그</span></a>
-              <a href="#">↗ <span id="pLink3">Instagram</span></a>
+
+            <div class="pair">
+              <div class="pair-head">
+                <b id="outPairTitle">PAIR ♡</b>
+                <span id="outDday">D+328</span>
+              </div>
+              <div class="pair-grid" id="pairGrid">
+                <div class="pair-img" id="pairPhoto1">
+                  <div class="pair-placeholder">IMAGE 01</div>
+                  <img id="pairImg1" alt="">
+                </div>
+                <div class="pair-img" id="pairPhoto2">
+                  <div class="pair-placeholder">IMAGE 02</div>
+                  <img id="pairImg2" alt="">
+                </div>
+              </div>
+              <div class="story" id="outStory"></div>
             </div>
-          </aside>
+
+            <div class="links">
+              <span class="link" id="outLink1"></span>
+              <span class="link" id="outLink2"></span>
+              <span class="link" id="outLink3"></span>
+            </div>
+            <div class="ornament o2">♡</div>
+          </section>
         </div>
 
-        <div class="credit"><span id="pDday">D+328</span> · PROFILE</div>
-      </div>
-    </article>
+        <div class="note">made for us —</div>
+      </article>
+    </div>
   </div>
 </main>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 function update(){
-  $("pName").textContent = $("name").value || "이름";
-  $("pHandle").textContent = $("handle").value || "@id";
-  $("pBio").textContent = $("bio").value || "";
-  $("pAge").textContent = $("age").value || "—";
-  $("pJob").textContent = $("job").value || "—";
-  $("pGender").textContent = $("gender").value || "—";
-  $("pMbti").textContent = $("mbti").value || "—";
-  $("sAge").textContent = $("age").value || "—";
-  $("sJob").textContent = $("job").value || "—";
-  $("sGender").textContent = $("gender").value || "—";
-  $("sMbti").textContent = $("mbti").value || "—";
-  $("pPairTitle").textContent = $("pairTitle").value || "Pair ♡";
-  $("pStory").textContent = $("story").value || "";
-  $("pDday").textContent = $("dday").value || "";
-  $("pWarning").textContent = $("warning").value || "";
-  $("pLink1").textContent = $("link1").value || "LINK";
-  $("pLink2").textContent = $("link2").value || "LINK";
-  $("pLink3").textContent = $("link3").value || "LINK";
+  const pairs=[
+    ["name","outName"],["handle","outHandle"],["bio","outBio"],
+    ["age","outAge"],["job","outJob"],["gender","outGender"],["mbti","outMbti"],
+    ["personality","outPersonality"],["pairTitle","outPairTitle"],
+    ["dday","outDday"],["story","outStory"],["warning","outWarning"],
+    ["link1","outLink1"],["link2","outLink2"],["link3","outLink3"]
+  ];
+  pairs.forEach(([a,b])=>$(b).textContent=$(a).value);
 
-  const tags = $("tags").value.split(",").map(v=>v.trim()).filter(Boolean);
-  $("pTags").innerHTML = tags.map(v=>`<span class="tag">${esc(v)}</span>`).join("");
+  $("outTags").innerHTML=$("tags").value.split(",")
+    .map(v=>v.trim()).filter(Boolean)
+    .map(v=>"<span class='tag'>"+escapeHTML(v)+"</span>").join("");
 
-  const color = $("accent").value;
+  const color=$("color").value;
   document.documentElement.style.setProperty("--blue",color);
-  document.documentElement.style.setProperty("--blue2",hexToRgba(color,.10));
-  $("accentText").value = color;
+  $("colorText").value=color;
 
-  const size = Number($("imageSize").value);
-  $("imageSizeValue").textContent = size + "%";
-  $("pairGrid").style.width = size + "%";
-
-  document.querySelectorAll(".ratio button").forEach(b=>b.classList.remove("active"));
+  const size=$("pairSize").value;
+  $("pairGrid").style.width=size+"%";
+  $("pairSizeVal").textContent=size+"%";
+}
+function escapeHTML(s){
+  return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 
-function hexToRgba(hex,a){
-  const n=parseInt(hex.slice(1),16);
-  return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`;
-}
-function esc(s){
-  return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-}
-
-document.querySelectorAll(".tab").forEach(tab=>{
-  tab.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
-    tab.classList.add("active");
-    $("panel-"+tab.dataset.tab).classList.add("active");
-  });
-});
-
-document.querySelectorAll(".ratio button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".ratio button").forEach(x=>x.classList.remove("active"));
-    btn.classList.add("active");
-    const r=btn.dataset.ratio;
-    document.querySelectorAll(".pair-photo").forEach(el=>{
-      el.style.aspectRatio = r==="square" ? "1/1" : r==="portrait" ? "4/6" : "6/4";
-    });
-  });
-});
-
-document.querySelectorAll(".check").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    btn.classList.toggle("on");
-    const show=btn.classList.contains("on");
-    if(btn.dataset.show==="story") $("storyBox").style.display=show?"block":"none";
-    if(btn.dataset.show==="more") $("moreBox").style.display=show?"flex":"none";
-    if(btn.dataset.show==="gallery") {}
-  });
-});
-
-[
-"name","handle","bio","tags","age","job","gender","mbti",
-"pairTitle","story","dday","warning","link1","link2","link3","imageSize","accent"
-].forEach(id=>{
-  $(id).addEventListener("input",update);
-  $(id).addEventListener("change",update);
-});
-
-$("accentText").addEventListener("input",()=>{
-  if(/^#[0-9a-fA-F]{6}$/.test($("accentText").value)){
-    $("accent").value=$("accentText").value;
-    update();
+document.querySelectorAll("input[type=text],textarea,input[type=range]").forEach(el=>el.addEventListener("input",update));
+$("color").addEventListener("input",update);
+$("colorText").addEventListener("input",()=>{
+  if(/^#[0-9a-fA-F]{6}$/.test($("colorText").value)){
+    $("color").value=$("colorText").value;update();
   }
 });
 
-function imageTo(input,targetImg,targetWrap,nameEl,wrapClass="has-image"){
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    $(btn.dataset.tab).classList.add("active");
+  };
+});
+
+document.querySelectorAll(".ratio").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".ratio").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".pair-img").forEach(x=>x.style.aspectRatio=btn.dataset.ratio);
+  };
+});
+
+function loadImage(input,imgId,wrapId,nameId){
   const file=input.files[0];
   if(!file)return;
-  $(nameEl).textContent=file.name;
+  $(nameId).textContent=file.name;
   const reader=new FileReader();
   reader.onload=e=>{
-    $(targetImg).src=e.target.result;
-    $(targetWrap).classList.add(wrapClass);
+    $(imgId).src=e.target.result;
+    $(wrapId).classList.add("has-image");
   };
   reader.readAsDataURL(file);
 }
-$("avatarFile").addEventListener("change",()=>imageTo($("avatarFile"),"avatarImg","avatar","avatarFileName"));
-$("coverFile").addEventListener("change",()=>imageTo($("coverFile"),"coverImg","cover","coverFileName"));
-$("pair1File").addEventListener("change",()=>imageTo($("pair1File"),"pairImg1","pairPhoto1","pair1FileName"));
-$("pair2File").addEventListener("change",()=>imageTo($("pair2File"),"pairImg2","pairPhoto2","pair2FileName"));
+$("avatarFile").onchange=()=>loadImage($("avatarFile"),"avatarImg","avatar","avatarFileName");
+$("pair1File").onchange=()=>loadImage($("pair1File"),"pairImg1","pairPhoto1","pair1Name");
+$("pair2File").onchange=()=>loadImage($("pair2File"),"pairImg2","pairPhoto2","pair2Name");
 
-function downloadHTML(){
-  const profile=$("profile").cloneNode(true);
+$("save").onclick=()=>{
+  const clone=$("result").cloneNode(true);
   const css=[...document.querySelectorAll("style")].map(x=>x.textContent).join("\n");
-  const out=`<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PROFILE</title><style>${css}</style></head><body style="margin:0;padding:30px;background:#f7f7f8;display:flex;justify-content:center;align-items:center;min-height:100vh">${profile.outerHTML}</body></html>`;
-  const blob=new Blob([out],{type:"text/html;charset=utf-8"});
+  const doc='<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PROFILE</title><style>'+css+'</style></head><body style="margin:0;background:#f3f3f1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px">'+clone.outerHTML+'</body></html>';
+  const blob=new Blob([doc],{type:"text/html;charset=utf-8"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="profile-page.html";
+  a.download="pop-profile.html";
   a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-
+};
 update();
-document.querySelector('.ratio button[data-ratio="landscape"]').classList.add("active");
 </script>
 </body>
 </html>
