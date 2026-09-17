@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PROFILE MAKER</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f5f7;color:#202020;font-family:Arial,Pretendard,sans-serif}
+button,input,textarea{font:inherit}
+
+.app{
+width:100%;
+max-width:1200px;
+margin:30px auto;
+padding:0 20px;
+}
+
+.top{
+display:flex;
+align-items:end;
+justify-content:space-between;
+margin-bottom:18px;
+}
+
+.logo{
+font-size:26px;
+font-weight:900;
+letter-spacing:-1.5px;
+}
+
+.logo span{color:#ff5c8a}
+
+.sub{
+font-size:12px;
+color:#999;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.workspace{
+display:grid;
+grid-template-columns:6fr 4fr;
+gap:18px;
+align-items:start;
+}
+
+.editor,.preview-wrap{
+background:#fff;
+border:1px solid #e7e7e7;
+border-radius:24px;
+box-shadow:0 8px 30px rgba(0,0,0,.04);
+}
+
+.editor{
+padding:22px;
+}
+
+.preview-wrap{
+padding:18px;
+position:sticky;
+top:20px;
+}
+
+.editor-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.editor-title{
+font-size:15px;
+font-weight:900;
+}
+
+.count{
+font-size:11px;
+color:#aaa;
+}
+
+.field{
+margin-bottom:14px;
+}
+
+.field label{
+display:block;
+font-size:11px;
+font-weight:900;
+letter-spacing:.5px;
+margin-bottom:7px;
+color:#555;
+}
+
+input,textarea{
+width:100%;
+border:1px solid #e6e6e6;
+background:#fafafa;
+border-radius:12px;
+padding:11px 13px;
+outline:none;
+color:#222;
+transition:.2s;
+}
+
+input:focus,textarea:focus{
+border-color:#ff7da2;
+background:#fff;
+}
+
+textarea{
+min-height:130px;
+resize:vertical;
+line-height:1.7;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.tags{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+}
+
+.tag-input{
+flex:1;
+min-width:100px;
+}
+
+.tag-add{
+width:42px;
+border:0;
+border-radius:12px;
+background:#222;
+color:#fff;
+font-weight:900;
+cursor:pointer;
+}
+
+.tag-list{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:8px;
+}
+
+.tag-item{
+background:#fff0f4;
+color:#ff4e7e;
+border-radius:999px;
+padding:5px 10px;
+font-size:11px;
+font-weight:800;
+cursor:pointer;
+}
+
+.actions{
+display:flex;
+gap:8px;
+margin-top:20px;
+}
+
+.actions button{
+flex:1;
+border:0;
+border-radius:13px;
+padding:12px;
+font-weight:900;
+cursor:pointer;
+}
+
+.reset{
+background:#f1f1f1;
+color:#555;
+}
+
+.copy{
+background:#ff5c8a;
+color:#fff;
+}
+
+.preview-head{
+font-size:11px;
+font-weight:900;
+letter-spacing:1px;
+color:#aaa;
+margin:2px 3px 12px;
+}
+
+.card{
+background:#fff;
+border:1px solid #eee;
+border-radius:22px;
+overflow:hidden;
+}
+
+.card-top{
+height:10px;
+background:linear-gradient(90deg,#ff5c8a 0%,#ff9a62 50%,#ffd15c 100%);
+}
+
+.card-inner{
+padding:22px;
+}
+
+.profile{
+display:flex;
+align-items:center;
+gap:13px;
+padding-bottom:18px;
+border-bottom:1px solid #eee;
+}
+
+.avatar{
+width:58px;
+height:58px;
+border-radius:18px;
+background:#f2f2f2;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:900;
+flex-shrink:0;
+}
+
+.profile-name{
+font-size:19px;
+font-weight:900;
+letter-spacing:-.5px;
+}
+
+.profile-id{
+font-size:11px;
+color:#aaa;
+margin-top:2px;
+}
+
+.intro{
+font-size:12px;
+color:#555;
+margin-top:5px;
+line-height:1.5;
+}
+
+.section{
+margin-top:18px;
+}
+
+.section-title{
+display:inline-block;
+font-size:10px;
+font-weight:900;
+letter-spacing:1px;
+background:#222;
+color:#fff;
+padding:5px 9px;
+border-radius:7px;
+margin-bottom:9px;
+}
+
+.section-text{
+font-size:12px;
+line-height:1.8;
+color:#444;
+white-space:pre-wrap;
+word-break:break-word;
+}
+
+.tag-preview{
+display:flex;
+gap:5px;
+flex-wrap:wrap;
+margin-top:18px;
+}
+
+.tag-preview span{
+font-size:10px;
+font-weight:800;
+padding:5px 9px;
+background:#fff0f4;
+color:#ff4e7e;
+border-radius:999px;
+}
+
+.footer{
+margin-top:18px;
+padding-top:12px;
+border-top:1px solid #eee;
+font-size:9px;
+color:#bbb;
+text-align:right;
+letter-spacing:1px;
+}
+
+@media(max-width:760px){
+.app{
+margin:18px auto;
+padding:0 12px;
+}
+
+.top{
+align-items:start;
+flex-direction:column;
+gap:4px;
+}
+
+.workspace{
+grid-template-columns:1fr;
+}
+
+.preview-wrap{
+position:static;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.editor{
+padding:17px;
+}
+
+.preview-wrap{
+padding:12px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="top">
+<div class="logo">PROFILE<span>POP.</span></div>
+<div class="sub">TWITTER PROFILE MAKER</div>
+</div>
+
+<div class="workspace">
+
+<!-- 편집 영역 -->
+<div class="editor">
+
+<div class="editor-head">
+<div class="editor-title">PROFILE EDITOR</div>
+<div class="count">LIVE PREVIEW</div>
+</div>
+
+<div class="grid">
+
+<div class="field">
+<label>NAME</label>
+<input id="name" value="SAEBYEOK" oninput="update()">
+</div>
+
+<div class="field">
+<label>ID</label>
+<input id="userid" value="@saebyeok" oninput="update()">
+</div>
+
+</div>
+
+<div class="field">
+<label>INTRO</label>
+<input id="intro" value="좋아하는 것들을 천천히 기록합니다." oninput="update()">
+</div>
+
+<div class="field">
+<label>ABOUT ME</label>
+<textarea id="about" oninput="update()">블루페어리 / 냐냐냥 / 온리
+상호배려를 기본으로 교류합니다.
+편하게 말 걸어주셔도 좋아요.</textarea>
+</div>
+
+<div class="field">
+<label>PERSONALITY</label>
+<textarea id="personality" oninput="update()">성향 및 교류 관련 내용을 자유롭게 작성해주세요.
+
+좋아하는 장르, 선호하는 관계, 교류 성향,
+주의사항 등 길게 적어도 미리보기에서 자연스럽게 표시됩니다.</textarea>
+</div>
+
+<div class="field">
+<label>NOTICE</label>
+<textarea id="notice" oninput="update()">기본적인 예의를 지켜주세요.
+불편한 부분은 서로 배려하며 조율합니다.</textarea>
+</div>
+
+<div class="field">
+<label>TAGS</label>
+<div class="tags">
+<input class="tag-input" id="tagInput" placeholder="태그 입력 후 +">
+<button class="tag-add" onclick="addTag()">+</button>
+</div>
+<div class="tag-list" id="tagList"></div>
+</div>
+
+<div class="actions">
+<button class="reset" onclick="resetForm()">RESET</button>
+<button class="copy" onclick="copyHTML()">COPY HTML</button>
+</div>
+
+</div>
+
+<!-- 미리보기 -->
+<div class="preview-wrap">
+
+<div class="preview-head">PREVIEW / 6 : 4</div>
+
+<div class="card">
+
+<div class="card-top"></div>
+
+<div class="card-inner">
+
+<div class="profile">
+
+<div class="avatar" id="previewAvatar">S</div>
+
+<div>
+<div class="profile-name" id="previewName">SAEBYEOK</div>
+<div class="profile-id" id="previewId">@saebyeok</div>
+<div class="intro" id="previewIntro">좋아하는 것들을 천천히 기록합니다.</div>
+</div>
+
+</div>
+
+<div class="section">
+<div class="section-title">ABOUT</div>
+<div class="section-text" id="previewAbout"></div>
+</div>
+
+<div class="section">
+<div class="section-title">PERSONALITY</div>
+<div class="section-text" id="previewPersonality"></div>
+</div>
+
+<div class="section">
+<div class="section-title">NOTICE</div>
+<div class="section-text" id="previewNotice"></div>
+</div>
+
+<div class="tag-preview" id="previewTags"></div>
+
+<div class="footer">PROFILE POP / 2026</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+let tags=["ONLY","BLUE FAIRY","상호배려"];
+
+function update(){
+document.getElementById("previewName").textContent=
+document.getElementById("name").value||"NAME";
+
+document.getElementById("previewId").textContent=
+document.getElementById("userid").value||"@ID";
+
+document.getElementById("previewIntro").textContent=
+document.getElementById("intro").value||"";
+
+document.getElementById("previewAbout").textContent=
+document.getElementById("about").value||"";
+
+document.getElementById("previewPersonality").textContent=
+document.getElementById("personality").value||"";
+
+document.getElementById("previewNotice").textContent=
+document.getElementById("notice").value||"";
+
+document.getElementById("previewAvatar").textContent=
+(document.getElementById("name").value||"S").charAt(0).toUpperCase();
+
+renderTags();
+}
+
+function addTag(){
+const input=document.getElementById("tagInput");
+const value=input.value.trim();
+
+if(value){
+tags.push(value);
+input.value="";
+renderTags();
+}
+}
+
+function renderTags(){
+const list=document.getElementById("tagList");
+const preview=document.getElementById("previewTags");
+
+list.innerHTML="";
+preview.innerHTML="";
+
+tags.forEach((tag,index)=>{
+const item=document.createElement("span");
+item.className="tag-item";
+item.textContent=tag+" ×";
+item.onclick=()=>{
+tags.splice(index,1);
+renderTags();
+};
+list.appendChild(item);
+
+const p=document.createElement("span");
+p.textContent=tag;
+preview.appendChild(p);
+});
+}
+
+function resetForm(){
+document.getElementById("name").value="SAEBYEOK";
+document.getElementById("userid").value="@saebyeok";
+document.getElementById("intro").value="좋아하는 것들을 천천히 기록합니다.";
+document.getElementById("about").value="블루페어리 / 냐냐냥 / 온리\n상호배려를 기본으로 교류합니다.\n편하게 말 걸어주셔도 좋아요.";
+document.getElementById("personality").value="성향 및 교류 관련 내용을 자유롭게 작성해주세요.\n\n좋아하는 장르, 선호하는 관계, 교류 성향,\n주의사항 등 길게 적어도 미리보기에서 자연스럽게 표시됩니다.";
+document.getElementById("notice").value="기본적인 예의를 지켜주세요.\n불편한 부분은 서로 배려하며 조율합니다.";
+tags=["ONLY","BLUE FAIRY","상호배려"];
+update();
+}
+
+function copyHTML(){
+const name=document.getElementById("name").value;
+const userid=document.getElementById("userid").value;
+const intro=document.getElementById("intro").value;
+const about=document.getElementById("about").value;
+const personality=document.getElementById("personality").value;
+const notice=document.getElementById("notice").value;
+
+const tagHTML=tags.map(t=>
+`<span style="font-size:10px;font-weight:800;padding:5px 9px;background:#fff0f4;color:#ff4e7e;border-radius:999px;">${t}</span>`
+).join("");
+
+const html=`
+<div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #eee;border-radius:22px;overflow:hidden;font-family:Arial,Pretendard,sans-serif;color:#222;">
+<div style="height:10px;background:linear-gradient(90deg,#ff5c8a,#ff9a62,#ffd15c);"></div>
+<div style="padding:22px;">
+<div style="display:flex;align-items:center;gap:13px;padding-bottom:18px;border-bottom:1px solid #eee;">
+<div style="width:58px;height:58px;border-radius:18px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;">${name.charAt(0).toUpperCase()}</div>
+<div>
+<div style="font-size:19px;font-weight:900;">${name}</div>
+<div style="font-size:11px;color:#aaa;margin-top:2px;">${userid}</div>
+<div style="font-size:12px;color:#555;margin-top:5px;">${intro}</div>
+</div>
+</div>
+
+<div style="margin-top:18px;">
+<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">ABOUT</div>
+<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${about}</div>
+</div>
+
+<div style="margin-top:18px;">
+<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">PERSONALITY</div>
+<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${personality}</div>
+</div>
+
+<div style="margin-top:18px;">
+<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">NOTICE</div>
+<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${notice}</div>
+</div>
+
+<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:18px;">${tagHTML}</div>
+
+<div style="margin-top:18px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#bbb;text-align:right;letter-spacing:1px;">PROFILE POP / 2026</div>
+</div>
+</div>`;
+
+navigator.clipboard.writeText(html).then(()=>{
+alert("완성된 프로필 HTML을 복사했어요!");
+});
+}
+
+update();
+</script>
+
+</body>
+</html>
