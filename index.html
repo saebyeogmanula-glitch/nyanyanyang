@@ -3,586 +3,633 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PROFILE MAKER</title>
+<title>PROFILEPOP — Twitter Profile Maker</title>
 <style>
+:root{
+  --pink:#ff5b8a;
+  --coral:#ff765f;
+  --yellow:#ffd15c;
+  --ink:#242424;
+  --muted:#8d8d93;
+  --line:#e9e9ed;
+  --paper:#ffffff;
+  --bg:#f3f3f6;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#f5f5f7;color:#202020;font-family:Arial,Pretendard,sans-serif}
-button,input,textarea{font:inherit}
-
-.app{
-width:100%;
-max-width:1200px;
-margin:30px auto;
-padding:0 20px;
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Arial,Pretendard,"Noto Sans KR",sans-serif;
+  letter-spacing:-.02em;
 }
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
-.top{
-display:flex;
-align-items:end;
-justify-content:space-between;
-margin-bottom:18px;
+.app{max-width:1500px;margin:0 auto;padding:28px 30px 60px}
+.topbar{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:20px
 }
-
-.logo{
-font-size:26px;
-font-weight:900;
-letter-spacing:-1.5px;
+.brand{
+  font-size:27px;font-weight:950;letter-spacing:-1.7px
 }
-
-.logo span{color:#ff5c8a}
-
-.sub{
-font-size:12px;
-color:#999;
-font-weight:700;
-letter-spacing:1px;
+.brand em{font-style:normal;color:var(--pink)}
+.topmeta{
+  font-size:11px;font-weight:800;color:#9a9aa1;letter-spacing:1.2px
 }
 
 .workspace{
-display:grid;
-grid-template-columns:6fr 4fr;
-gap:18px;
-align-items:start;
+  display:grid;
+  grid-template-columns:minmax(500px,1.02fr) minmax(520px,.98fr);
+  gap:20px;
+  align-items:start;
+}
+.panel{
+  background:#fff;border:1px solid #e6e6ea;border-radius:27px;
+  box-shadow:0 12px 35px rgba(25,25,35,.045)
+}
+.editor{padding:23px}
+.editor-head,.preview-head{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.editor-head{margin-bottom:18px}
+.head-title{font-size:14px;font-weight:950;letter-spacing:.2px}
+.live{
+  display:flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:850;color:#a0a0a5;letter-spacing:.7px
+}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--pink);display:block}
+
+.section-card{
+  border:1px solid #ededf0;border-radius:19px;padding:15px;margin-top:11px;
+  background:#fff
+}
+.section-label{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px
+}
+.section-label b{font-size:10px;font-weight:950;letter-spacing:1px}
+.section-label span{font-size:9px;color:#aaa;font-weight:700}
+
+.field{margin-bottom:12px}
+.field:last-child{margin-bottom:0}
+label{
+  display:block;font-size:10px;font-weight:900;color:#56565c;
+  letter-spacing:.65px;margin:0 0 6px
+}
+input[type=text],textarea,select{
+  width:100%;border:1px solid #e5e5e9;border-radius:11px;
+  background:#fafafd;color:#222;outline:none
+}
+input[type=text]{height:40px;padding:0 12px}
+textarea{min-height:96px;padding:11px 12px;resize:vertical;line-height:1.7}
+input[type=text]:focus,textarea:focus,select:focus{border-color:#ff93ae;background:#fff}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+.color-row{display:flex;gap:7px;flex-wrap:wrap}
+.color{
+  width:29px;height:29px;border-radius:9px;border:2px solid #fff;
+  box-shadow:0 0 0 1px #ddd;cursor:pointer
+}
+.color.active{box-shadow:0 0 0 2px var(--ink)}
+
+.check-row{display:flex;gap:7px;flex-wrap:wrap}
+.check{
+  border:1px solid #e6e6e9;background:#fafafd;border-radius:10px;
+  padding:8px 10px;font-size:10px;font-weight:850;color:#666
+}
+.check.active{background:#242424;color:#fff;border-color:#242424}
+
+.tagbar{display:flex;gap:7px}
+.tagbar input{flex:1}
+.tagbar button{
+  width:42px;border:0;border-radius:11px;background:#242424;color:#fff;font-weight:900
+}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{
+  padding:6px 9px;border-radius:999px;background:#fff0f4;color:#ff4f7d;
+  font-size:9px;font-weight:900
+}
+.tag button{border:0;background:none;color:inherit;font-weight:900;padding:0 0 0 4px}
+
+.avatar-row{display:flex;gap:9px;align-items:center}
+.avatar-preview{
+  width:52px;height:52px;border-radius:16px;background:#f0f0f2;
+  display:flex;align-items:center;justify-content:center;font-weight:950;font-size:19px;
+  overflow:hidden;flex:none
+}
+.avatar-preview img{width:100%;height:100%;object-fit:cover}
+.file{
+  flex:1;position:relative;overflow:hidden
+}
+.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-btn{
+  height:40px;border:1px solid #e5e5e9;border-radius:11px;background:#fafafd;
+  display:flex;align-items:center;padding:0 12px;font-size:10px;font-weight:850;color:#666
 }
 
-.editor,.preview-wrap{
-background:#fff;
-border:1px solid #e7e7e7;
-border-radius:24px;
-box-shadow:0 8px 30px rgba(0,0,0,.04);
+.pair-controls{display:flex;gap:7px}
+.pair-add{
+  width:100%;border:1px dashed #d7d7dc;background:#fafafd;color:#555;
+  border-radius:11px;padding:10px;font-size:10px;font-weight:900
 }
-
-.editor{
-padding:22px;
+.pair-list{display:flex;flex-direction:column;gap:8px;margin-top:9px}
+.pair-item{
+  border:1px solid #e8e8eb;border-radius:13px;padding:10px;background:#fafafd
 }
-
-.preview-wrap{
-padding:18px;
-position:sticky;
-top:20px;
+.pair-top{display:flex;align-items:center;gap:8px}
+.pair-thumb{
+  width:45px;height:45px;border-radius:10px;background:#eee;overflow:hidden;flex:none
 }
-
-.editor-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
+.pair-thumb img{width:100%;height:100%;object-fit:cover}
+.pair-info{flex:1;min-width:0}
+.pair-info b{display:block;font-size:10px;margin-bottom:5px}
+.pair-actions{display:flex;gap:5px}
+.pair-actions button{
+  border:1px solid #ddd;background:#fff;border-radius:8px;padding:5px 7px;
+  font-size:8px;font-weight:850
 }
-
-.editor-title{
-font-size:15px;
-font-weight:900;
+.pair-size{margin-top:8px}
+.range{
+  width:100%;accent-color:var(--pink);height:16px
 }
-
-.count{
-font-size:11px;
-color:#aaa;
+.ratio-row{display:flex;gap:5px;margin-top:7px}
+.ratio{
+  flex:1;border:1px solid #ddd;background:#fff;border-radius:8px;
+  padding:6px 4px;font-size:8px;font-weight:900
 }
+.ratio.active{background:#242424;color:#fff;border-color:#242424}
 
-.field{
-margin-bottom:14px;
+.bottom-actions{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:8px;margin-top:15px
 }
-
-.field label{
-display:block;
-font-size:11px;
-font-weight:900;
-letter-spacing:.5px;
-margin-bottom:7px;
-color:#555;
+.action{
+  border:0;border-radius:13px;padding:12px;font-size:10px;font-weight:950
 }
+.reset{background:#f0f0f2;color:#555}
+.export{background:var(--pink);color:#fff}
 
-input,textarea{
-width:100%;
-border:1px solid #e6e6e6;
-background:#fafafa;
-border-radius:12px;
-padding:11px 13px;
-outline:none;
-color:#222;
-transition:.2s;
+.preview-panel{padding:17px}
+.preview-head{margin:1px 3px 12px}
+.preview-head b{font-size:10px;color:#aaa;letter-spacing:1px}
+.preview-tools{display:flex;gap:5px}
+.preview-tools button{
+  border:1px solid #e7e7ea;background:#fff;border-radius:8px;
+  font-size:8px;font-weight:900;padding:6px 8px
 }
+.preview-tools button.active{background:#242424;color:#fff;border-color:#242424}
 
-input:focus,textarea:focus{
-border-color:#ff7da2;
-background:#fff;
+.stage{
+  min-height:720px;background:#f6f6f8;border-radius:20px;
+  display:flex;align-items:flex-start;justify-content:center;padding:30px 20px;
+  overflow:auto
 }
-
-textarea{
-min-height:130px;
-resize:vertical;
-line-height:1.7;
+#capture{
+  width:900px;min-height:540px;background:#fff;position:relative;
+  border:1px solid #ececef;overflow:hidden;flex:none;
 }
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.tags{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-}
-
-.tag-input{
-flex:1;
-min-width:100px;
-}
-
-.tag-add{
-width:42px;
-border:0;
-border-radius:12px;
-background:#222;
-color:#fff;
-font-weight:900;
-cursor:pointer;
-}
-
-.tag-list{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-top:8px;
-}
-
-.tag-item{
-background:#fff0f4;
-color:#ff4e7e;
-border-radius:999px;
-padding:5px 10px;
-font-size:11px;
-font-weight:800;
-cursor:pointer;
-}
-
-.actions{
-display:flex;
-gap:8px;
-margin-top:20px;
-}
-
-.actions button{
-flex:1;
-border:0;
-border-radius:13px;
-padding:12px;
-font-weight:900;
-cursor:pointer;
-}
-
-.reset{
-background:#f1f1f1;
-color:#555;
-}
-
-.copy{
-background:#ff5c8a;
-color:#fff;
-}
-
-.preview-head{
-font-size:11px;
-font-weight:900;
-letter-spacing:1px;
-color:#aaa;
-margin:2px 3px 12px;
-}
-
-.card{
-background:#fff;
-border:1px solid #eee;
-border-radius:22px;
-overflow:hidden;
-}
-
-.card-top{
-height:10px;
-background:linear-gradient(90deg,#ff5c8a 0%,#ff9a62 50%,#ffd15c 100%);
-}
-
-.card-inner{
-padding:22px;
-}
-
 .profile{
-display:flex;
-align-items:center;
-gap:13px;
-padding-bottom:18px;
-border-bottom:1px solid #eee;
+  padding:48px 54px 38px;position:relative
 }
-
-.avatar{
-width:58px;
-height:58px;
-border-radius:18px;
-background:#f2f2f2;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:900;
-flex-shrink:0;
+.accent{
+  position:absolute;left:0;top:0;width:100%;height:13px;
+  background:linear-gradient(90deg,var(--pink),var(--coral),var(--yellow))
 }
-
-.profile-name{
-font-size:19px;
-font-weight:900;
-letter-spacing:-.5px;
+.decor{
+  position:absolute;right:34px;top:29px;display:flex;gap:6px
 }
+.dot{width:7px;height:7px;border-radius:50%;background:#242424}
+.dot:nth-child(2){background:var(--pink)}
+.dot:nth-child(3){background:var(--yellow)}
 
-.profile-id{
-font-size:11px;
-color:#aaa;
-margin-top:2px;
+.hero{
+  display:flex;align-items:center;gap:18px;padding-bottom:27px;
+  border-bottom:1px solid #ececef
 }
-
-.intro{
-font-size:12px;
-color:#555;
-margin-top:5px;
-line-height:1.5;
+.hero-avatar{
+  width:88px;height:88px;border-radius:27px;background:#f1f1f3;
+  display:flex;align-items:center;justify-content:center;
+  font-size:29px;font-weight:950;overflow:hidden;flex:none
 }
+.hero-avatar img{width:100%;height:100%;object-fit:cover}
+.hero-copy{min-width:0}
+.hero-name{font-size:29px;font-weight:950;letter-spacing:-1.5px}
+.hero-id{font-size:11px;color:#a0a0a4;margin-top:4px}
+.hero-intro{font-size:13px;color:#555;margin-top:8px;line-height:1.55}
 
-.section{
-margin-top:18px;
+.main-grid{
+  display:grid;grid-template-columns:1.35fr .65fr;gap:36px;padding-top:29px
 }
-
 .section-title{
-display:inline-block;
-font-size:10px;
-font-weight:900;
-letter-spacing:1px;
-background:#222;
-color:#fff;
-padding:5px 9px;
-border-radius:7px;
-margin-bottom:9px;
+  display:flex;align-items:center;gap:8px;margin-bottom:9px
+}
+.section-title b{
+  font-size:10px;letter-spacing:1.2px;font-weight:950
+}
+.section-title i{
+  display:block;width:23px;height:3px;border-radius:10px;background:var(--pink)
+}
+.text{
+  white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.85;color:#4a4a50
+}
+.notice-box{
+  background:#fafafd;border-radius:14px;padding:13px 15px;margin-top:17px;
+  border:1px solid #eeeef1
+}
+.notice-box .text{font-size:11px;line-height:1.75}
+
+.preview-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:20px}
+.preview-tags span{
+  background:#fff0f4;color:#ff4f7d;border-radius:999px;padding:6px 9px;
+  font-size:9px;font-weight:900
 }
 
-.section-text{
-font-size:12px;
-line-height:1.8;
-color:#444;
-white-space:pre-wrap;
-word-break:break-word;
+.pairs{
+  margin-top:28px;padding-top:22px;border-top:1px solid #ececef
 }
-
-.tag-preview{
-display:flex;
-gap:5px;
-flex-wrap:wrap;
-margin-top:18px;
+.pair-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:11px}
+.pair-card{
+  overflow:hidden;border-radius:12px;background:#f0f0f2;position:relative;
+  min-height:90px
 }
-
-.tag-preview span{
-font-size:10px;
-font-weight:800;
-padding:5px 9px;
-background:#fff0f4;
-color:#ff4e7e;
-border-radius:999px;
+.pair-card img{
+  display:block;width:100%;height:100%;object-fit:cover
 }
-
+.pair-empty{
+  min-height:90px;border:1px dashed #d8d8dd;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px;font-weight:800
+}
 .footer{
-margin-top:18px;
-padding-top:12px;
-border-top:1px solid #eee;
-font-size:9px;
-color:#bbb;
-text-align:right;
-letter-spacing:1px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:27px;padding-top:13px;border-top:1px solid #ececef;
+  font-size:8px;color:#aaa;font-weight:800;letter-spacing:1px
 }
 
-@media(max-width:760px){
-.app{
-margin:18px auto;
-padding:0 12px;
+.size-s{transform-origin:top center}
+@media(max-width:1050px){
+  .workspace{grid-template-columns:1fr}
+  .preview-panel{position:relative}
 }
-
-.top{
-align-items:start;
-flex-direction:column;
-gap:4px;
-}
-
-.workspace{
-grid-template-columns:1fr;
-}
-
-.preview-wrap{
-position:static;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.editor{
-padding:17px;
-}
-
-.preview-wrap{
-padding:12px;
-}
+@media(max-width:700px){
+  .app{padding:18px 12px 40px}
+  .topbar{align-items:flex-start;gap:5px;flex-direction:column}
+  .editor{padding:15px}
+  .two,.three{grid-template-columns:1fr}
+  .stage{padding:15px 8px}
+  #capture{width:720px}
 }
 </style>
 </head>
-
 <body>
-
 <div class="app">
+  <div class="topbar">
+    <div class="brand">PROFILE<em>POP.</em></div>
+    <div class="topmeta">TWITTER PROFILE / PERSONALITY MAKER</div>
+  </div>
 
-<div class="top">
-<div class="logo">PROFILE<span>POP.</span></div>
-<div class="sub">TWITTER PROFILE MAKER</div>
-</div>
+  <div class="workspace">
+    <section class="panel editor">
+      <div class="editor-head">
+        <div class="head-title">PROFILE EDITOR</div>
+        <div class="live"><i></i> LIVE PREVIEW</div>
+      </div>
 
-<div class="workspace">
+      <div class="section-card">
+        <div class="section-label"><b>PROFILE</b><span>기본 정보</span></div>
+        <div class="two">
+          <div class="field">
+            <label>NAME</label>
+            <input type="text" id="name" value="SAEBYEOK">
+          </div>
+          <div class="field">
+            <label>ID</label>
+            <input type="text" id="userid" value="@saebyeok">
+          </div>
+        </div>
+        <div class="field">
+          <label>INTRO</label>
+          <input type="text" id="intro" value="좋아하는 것들을 천천히 기록합니다.">
+        </div>
+        <div class="avatar-row">
+          <div class="avatar-preview" id="avatarEditor">S</div>
+          <div class="file">
+            <div class="file-btn">프로필 사진 선택</div>
+            <input type="file" id="avatarFile" accept="image/*">
+          </div>
+        </div>
+      </div>
 
-<!-- 편집 영역 -->
-<div class="editor">
-
-<div class="editor-head">
-<div class="editor-title">PROFILE EDITOR</div>
-<div class="count">LIVE PREVIEW</div>
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>NAME</label>
-<input id="name" value="SAEBYEOK" oninput="update()">
-</div>
-
-<div class="field">
-<label>ID</label>
-<input id="userid" value="@saebyeok" oninput="update()">
-</div>
-
-</div>
-
-<div class="field">
-<label>INTRO</label>
-<input id="intro" value="좋아하는 것들을 천천히 기록합니다." oninput="update()">
-</div>
-
-<div class="field">
-<label>ABOUT ME</label>
-<textarea id="about" oninput="update()">블루페어리 / 냐냐냥 / 온리
+      <div class="section-card">
+        <div class="section-label"><b>ABOUT</b><span>짧은 소개</span></div>
+        <div class="field">
+          <textarea id="about">블루페어리 / 냐냐냥 / 온리
 상호배려를 기본으로 교류합니다.
 편하게 말 걸어주셔도 좋아요.</textarea>
-</div>
+        </div>
+      </div>
 
-<div class="field">
-<label>PERSONALITY</label>
-<textarea id="personality" oninput="update()">성향 및 교류 관련 내용을 자유롭게 작성해주세요.
+      <div class="section-card">
+        <div class="section-label"><b>PERSONALITY</b><span>긴 성향글</span></div>
+        <div class="field">
+          <textarea id="personality">성향 및 교류 관련 내용을 자유롭게 작성해주세요.
 
 좋아하는 장르, 선호하는 관계, 교류 성향,
-주의사항 등 길게 적어도 미리보기에서 자연스럽게 표시됩니다.</textarea>
-</div>
+주의사항 등을 길게 적어도 자연스럽게 표시됩니다.</textarea>
+        </div>
+      </div>
 
-<div class="field">
-<label>NOTICE</label>
-<textarea id="notice" oninput="update()">기본적인 예의를 지켜주세요.
+      <div class="section-card">
+        <div class="section-label"><b>NOTICE</b><span>주의사항</span></div>
+        <div class="field">
+          <textarea id="notice">기본적인 예의를 지켜주세요.
 불편한 부분은 서로 배려하며 조율합니다.</textarea>
-</div>
+        </div>
+      </div>
 
-<div class="field">
-<label>TAGS</label>
-<div class="tags">
-<input class="tag-input" id="tagInput" placeholder="태그 입력 후 +">
-<button class="tag-add" onclick="addTag()">+</button>
-</div>
-<div class="tag-list" id="tagList"></div>
-</div>
+      <div class="section-card">
+        <div class="section-label"><b>TAGS</b><span>클릭해서 삭제</span></div>
+        <div class="tagbar">
+          <input type="text" id="tagInput" placeholder="태그 입력">
+          <button id="addTag">+</button>
+        </div>
+        <div class="tags" id="tags"></div>
+      </div>
 
-<div class="actions">
-<button class="reset" onclick="resetForm()">RESET</button>
-<button class="copy" onclick="copyHTML()">COPY HTML</button>
-</div>
+      <div class="section-card">
+        <div class="section-label"><b>PAIR IMAGES</b><span>정사각형 · 4:6 · 6:4</span></div>
+        <button class="pair-add" id="addPair">＋ 페어 이미지 추가</button>
+        <div class="pair-list" id="pairList"></div>
+      </div>
 
-</div>
+      <div class="section-card">
+        <div class="section-label"><b>STYLE</b><span>팝 컬러</span></div>
+        <div class="color-row" id="colors">
+          <button class="color active" data-c="#ff5b8a" style="background:#ff5b8a"></button>
+          <button class="color" data-c="#6d7cff" style="background:#6d7cff"></button>
+          <button class="color" data-c="#20bfa9" style="background:#20bfa9"></button>
+          <button class="color" data-c="#ff8b3d" style="background:#ff8b3d"></button>
+          <button class="color" data-c="#9b72ff" style="background:#9b72ff"></button>
+          <button class="color" data-c="#222222" style="background:#222"></button>
+        </div>
+      </div>
 
-<!-- 미리보기 -->
-<div class="preview-wrap">
+      <div class="bottom-actions">
+        <button class="action reset" id="reset">RESET</button>
+        <button class="action export" id="export">IMAGE로 저장하기</button>
+      </div>
+    </section>
 
-<div class="preview-head">PREVIEW / 6 : 4</div>
+    <section class="panel preview-panel">
+      <div class="preview-head">
+        <b>PREVIEW / 6 : 4</b>
+        <div class="preview-tools">
+          <button class="active" data-scale="1">100%</button>
+          <button data-scale=".85">85%</button>
+          <button data-scale=".7">70%</button>
+        </div>
+      </div>
 
-<div class="card">
+      <div class="stage">
+        <div id="capture" class="size-s">
+          <div class="accent"></div>
+          <div class="decor"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
 
-<div class="card-top"></div>
+          <div class="profile">
+            <div class="hero">
+              <div class="hero-avatar" id="heroAvatar">S</div>
+              <div class="hero-copy">
+                <div class="hero-name" id="pName">SAEBYEOK</div>
+                <div class="hero-id" id="pId">@saebyeok</div>
+                <div class="hero-intro" id="pIntro">좋아하는 것들을 천천히 기록합니다.</div>
+              </div>
+            </div>
 
-<div class="card-inner">
+            <div class="main-grid">
+              <div>
+                <div class="section-title"><i></i><b>ABOUT</b></div>
+                <div class="text" id="pAbout"></div>
 
-<div class="profile">
+                <div class="section-title" style="margin-top:25px"><i></i><b>PERSONALITY</b></div>
+                <div class="text" id="pPersonality"></div>
+              </div>
 
-<div class="avatar" id="previewAvatar">S</div>
+              <div>
+                <div class="notice-box">
+                  <div class="section-title"><i></i><b>NOTICE</b></div>
+                  <div class="text" id="pNotice"></div>
+                </div>
+                <div class="preview-tags" id="pTags"></div>
+              </div>
+            </div>
 
-<div>
-<div class="profile-name" id="previewName">SAEBYEOK</div>
-<div class="profile-id" id="previewId">@saebyeok</div>
-<div class="intro" id="previewIntro">좋아하는 것들을 천천히 기록합니다.</div>
-</div>
+            <div class="pairs">
+              <div class="section-title"><i></i><b>PAIR ARCHIVE</b></div>
+              <div class="pair-grid" id="pPairs"></div>
+            </div>
 
-</div>
-
-<div class="section">
-<div class="section-title">ABOUT</div>
-<div class="section-text" id="previewAbout"></div>
-</div>
-
-<div class="section">
-<div class="section-title">PERSONALITY</div>
-<div class="section-text" id="previewPersonality"></div>
-</div>
-
-<div class="section">
-<div class="section-title">NOTICE</div>
-<div class="section-text" id="previewNotice"></div>
-</div>
-
-<div class="tag-preview" id="previewTags"></div>
-
-<div class="footer">PROFILE POP / 2026</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
+            <div class="footer">
+              <span>PROFILEPOP</span>
+              <span>TWITTER PERSONALITY CARD / 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <script>
+const $=id=>document.getElementById(id);
 let tags=["ONLY","BLUE FAIRY","상호배려"];
+let pairs=[];
+let accent="#ff5b8a";
+let avatarData="";
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
 
 function update(){
-document.getElementById("previewName").textContent=
-document.getElementById("name").value||"NAME";
+  const name=$("name").value||"NAME";
+  $("pName").textContent=name;
+  $("pId").textContent=$("userid").value||"@ID";
+  $("pIntro").textContent=$("intro").value||"";
+  $("pAbout").textContent=$("about").value||"";
+  $("pPersonality").textContent=$("personality").value||"";
+  $("pNotice").textContent=$("notice").value||"";
 
-document.getElementById("previewId").textContent=
-document.getElementById("userid").value||"@ID";
-
-document.getElementById("previewIntro").textContent=
-document.getElementById("intro").value||"";
-
-document.getElementById("previewAbout").textContent=
-document.getElementById("about").value||"";
-
-document.getElementById("previewPersonality").textContent=
-document.getElementById("personality").value||"";
-
-document.getElementById("previewNotice").textContent=
-document.getElementById("notice").value||"";
-
-document.getElementById("previewAvatar").textContent=
-(document.getElementById("name").value||"S").charAt(0).toUpperCase();
-
-renderTags();
-}
-
-function addTag(){
-const input=document.getElementById("tagInput");
-const value=input.value.trim();
-
-if(value){
-tags.push(value);
-input.value="";
-renderTags();
-}
+  if(!avatarData){
+    $("heroAvatar").textContent=name.charAt(0).toUpperCase();
+    $("avatarEditor").textContent=name.charAt(0).toUpperCase();
+  }
+  renderTags();
+  renderPairs();
 }
 
 function renderTags(){
-const list=document.getElementById("tagList");
-const preview=document.getElementById("previewTags");
+  $("tags").innerHTML=tags.map((t,i)=>
+    `<span class="tag">${esc(t)} <button onclick="removeTag(${i})">×</button></span>`
+  ).join("");
+  $("pTags").innerHTML=tags.map(t=>`<span>${esc(t)}</span>`).join("");
+}
+function removeTag(i){tags.splice(i,1);update()}
 
-list.innerHTML="";
-preview.innerHTML="";
-
-tags.forEach((tag,index)=>{
-const item=document.createElement("span");
-item.className="tag-item";
-item.textContent=tag+" ×";
-item.onclick=()=>{
-tags.splice(index,1);
-renderTags();
+$("addTag").onclick=()=>{
+  const v=$("tagInput").value.trim();
+  if(v){tags.push(v);$("tagInput").value="";update()}
 };
-list.appendChild(item);
-
-const p=document.createElement("span");
-p.textContent=tag;
-preview.appendChild(p);
+$("tagInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter")$("addTag").click();
 });
-}
 
-function resetForm(){
-document.getElementById("name").value="SAEBYEOK";
-document.getElementById("userid").value="@saebyeok";
-document.getElementById("intro").value="좋아하는 것들을 천천히 기록합니다.";
-document.getElementById("about").value="블루페어리 / 냐냐냥 / 온리\n상호배려를 기본으로 교류합니다.\n편하게 말 걸어주셔도 좋아요.";
-document.getElementById("personality").value="성향 및 교류 관련 내용을 자유롭게 작성해주세요.\n\n좋아하는 장르, 선호하는 관계, 교류 성향,\n주의사항 등 길게 적어도 미리보기에서 자연스럽게 표시됩니다.";
-document.getElementById("notice").value="기본적인 예의를 지켜주세요.\n불편한 부분은 서로 배려하며 조율합니다.";
-tags=["ONLY","BLUE FAIRY","상호배려"];
-update();
-}
-
-function copyHTML(){
-const name=document.getElementById("name").value;
-const userid=document.getElementById("userid").value;
-const intro=document.getElementById("intro").value;
-const about=document.getElementById("about").value;
-const personality=document.getElementById("personality").value;
-const notice=document.getElementById("notice").value;
-
-const tagHTML=tags.map(t=>
-`<span style="font-size:10px;font-weight:800;padding:5px 9px;background:#fff0f4;color:#ff4e7e;border-radius:999px;">${t}</span>`
-).join("");
-
-const html=`
-<div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #eee;border-radius:22px;overflow:hidden;font-family:Arial,Pretendard,sans-serif;color:#222;">
-<div style="height:10px;background:linear-gradient(90deg,#ff5c8a,#ff9a62,#ffd15c);"></div>
-<div style="padding:22px;">
-<div style="display:flex;align-items:center;gap:13px;padding-bottom:18px;border-bottom:1px solid #eee;">
-<div style="width:58px;height:58px;border-radius:18px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;">${name.charAt(0).toUpperCase()}</div>
-<div>
-<div style="font-size:19px;font-weight:900;">${name}</div>
-<div style="font-size:11px;color:#aaa;margin-top:2px;">${userid}</div>
-<div style="font-size:12px;color:#555;margin-top:5px;">${intro}</div>
-</div>
-</div>
-
-<div style="margin-top:18px;">
-<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">ABOUT</div>
-<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${about}</div>
-</div>
-
-<div style="margin-top:18px;">
-<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">PERSONALITY</div>
-<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${personality}</div>
-</div>
-
-<div style="margin-top:18px;">
-<div style="display:inline-block;font-size:10px;font-weight:900;letter-spacing:1px;background:#222;color:#fff;padding:5px 9px;border-radius:7px;margin-bottom:9px;">NOTICE</div>
-<div style="font-size:12px;line-height:1.8;color:#444;white-space:pre-wrap;">${notice}</div>
-</div>
-
-<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:18px;">${tagHTML}</div>
-
-<div style="margin-top:18px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#bbb;text-align:right;letter-spacing:1px;">PROFILE POP / 2026</div>
-</div>
-</div>`;
-
-navigator.clipboard.writeText(html).then(()=>{
-alert("완성된 프로필 HTML을 복사했어요!");
+$("avatarFile").addEventListener("change",e=>{
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    avatarData=r.result;
+    $("avatarEditor").innerHTML=`<img src="${avatarData}">`;
+    $("heroAvatar").innerHTML=`<img src="${avatarData}">`;
+  };
+  r.readAsDataURL(f);
 });
+
+$("addPair").onclick=()=>{
+  if(pairs.length>=6){alert("페어 이미지는 최대 6개까지 넣을 수 있어요.");return}
+  const id=Date.now()+Math.random();
+  pairs.push({id,src:"",ratio:"square",size:100,posX:50,posY:50});
+  renderPairs();
+};
+
+function renderPairs(){
+  $("pairList").innerHTML=pairs.map((p,i)=>`
+    <div class="pair-item">
+      <div class="pair-top">
+        <div class="pair-thumb">${p.src?`<img src="${p.src}">`:"＋"}</div>
+        <div class="pair-info">
+          <b>PAIR ${String(i+1).padStart(2,"0")}</b>
+          <div class="file">
+            <div class="file-btn">이미지 선택</div>
+            <input type="file" accept="image/*" onchange="pairFile(${p.id},this)">
+          </div>
+        </div>
+        <div class="pair-actions"><button onclick="removePair(${p.id})">삭제</button></div>
+      </div>
+      <div class="ratio-row">
+        <button class="ratio ${p.ratio==="square"?"active":""}" onclick="setRatio(${p.id},'square')">정사각형</button>
+        <button class="ratio ${p.ratio==="portrait"?"active":""}" onclick="setRatio(${p.id},'portrait')">4 : 6</button>
+        <button class="ratio ${p.ratio==="landscape"?"active":""}" onclick="setRatio(${p.id},'landscape')">6 : 4</button>
+      </div>
+      <div class="pair-size">
+        <label>사진 크기 <span id="sizeLabel${p.id}">${p.size}%</span></label>
+        <input class="range" type="range" min="40" max="140" value="${p.size}" oninput="setSize(${p.id},this.value)">
+      </div>
+    </div>
+  `).join("");
+  renderPairPreview();
 }
+function pairFile(id,input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{const p=pairs.find(x=>x.id===id);p.src=r.result;renderPairs()};
+  r.readAsDataURL(f);
+}
+function removePair(id){pairs=pairs.filter(p=>p.id!==id);renderPairs()}
+function setRatio(id,r){const p=pairs.find(x=>x.id===id);p.ratio=r;renderPairs()}
+function setSize(id,v){
+  const p=pairs.find(x=>x.id===id);p.size=+v;
+  const label=$("sizeLabel"+id);if(label)label.textContent=v+"%";
+  renderPairPreview();
+}
+function renderPairPreview(){
+  const wrap=$("pPairs");
+  wrap.innerHTML="";
+  pairs.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="pair-card";
+    let ratio=p.ratio==="square"?"1/1":p.ratio==="portrait"?"4/6":"6/4";
+    div.style.aspectRatio=ratio;
+    if(p.src){
+      const img=document.createElement("img");
+      img.src=p.src;
+      img.style.width=p.size+"%";
+      img.style.height=p.size+"%";
+      img.style.maxWidth="none";
+      img.style.maxHeight="none";
+      img.style.objectFit="cover";
+      img.style.margin="auto";
+      div.appendChild(img);
+    }
+    wrap.appendChild(div);
+  });
+}
+
+document.querySelectorAll(".color").forEach(b=>{
+  b.onclick=()=>{
+    accent=b.dataset.c;
+    document.documentElement.style.setProperty("--pink",accent);
+    document.querySelectorAll(".color").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+  };
+});
+
+document.querySelectorAll(".preview-tools button").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".preview-tools button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    $("capture").style.transform=`scale(${b.dataset.scale})`;
+    $("capture").style.marginBottom=`-${(1-+b.dataset.scale)*540}px`;
+  };
+});
+
+document.querySelectorAll("input[type=text],textarea").forEach(el=>el.addEventListener("input",update));
+
+$("reset").onclick=()=>{
+  if(!confirm("작성한 내용을 기본값으로 되돌릴까요?"))return;
+  $("name").value="SAEBYEOK";
+  $("userid").value="@saebyeok";
+  $("intro").value="좋아하는 것들을 천천히 기록합니다.";
+  $("about").value="블루페어리 / 냐냐냥 / 온리\n상호배려를 기본으로 교류합니다.\n편하게 말 걸어주셔도 좋아요.";
+  $("personality").value="성향 및 교류 관련 내용을 자유롭게 작성해주세요.\n\n좋아하는 장르, 선호하는 관계, 교류 성향,\n주의사항 등을 길게 적어도 자연스럽게 표시됩니다.";
+  $("notice").value="기본적인 예의를 지켜주세요.\n불편한 부분은 서로 배려하며 조율합니다.";
+  tags=["ONLY","BLUE FAIRY","상호배려"];pairs=[];avatarData="";
+  $("avatarFile").value="";
+  $("avatarEditor").textContent="S";$("heroAvatar").textContent="S";
+  update();
+};
+
+async function exportImage(){
+  if(typeof html2canvas==="undefined"){
+    alert("이미지 저장 모듈을 불러오는 중이에요. 잠시 후 다시 눌러주세요.");
+    return;
+  }
+  const target=$("capture");
+  const oldTransform=target.style.transform;
+  const oldMargin=target.style.marginBottom;
+  target.style.transform="none";target.style.marginBottom="0";
+  try{
+    const canvas=await html2canvas(target,{
+      scale:2,
+      backgroundColor:"#ffffff",
+      useCORS:true,
+      logging:false
+    });
+    const a=document.createElement("a");
+    a.download=(($("name").value||"profile").replace(/[\\/:*?"<>|]/g,"_"))+"_profile.png";
+    a.href=canvas.toDataURL("image/png");
+    a.click();
+  }catch(e){
+    alert("이미지 저장에 실패했어요. 브라우저를 새로고침한 뒤 다시 시도해주세요.");
+  }finally{
+    target.style.transform=oldTransform;target.style.marginBottom=oldMargin;
+  }
+}
+$("export").onclick=exportImage;
 
 update();
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
